@@ -1,6 +1,6 @@
 @ECommerceWebhook_HostAddress = http://localhost:5027
 
-GET {{ECommerceWebhook_HostAddress}}/weatherforecast/
+POST {{ECommerceWebhook_HostAddress}}/events
 Accept: application/json
 
 ###
