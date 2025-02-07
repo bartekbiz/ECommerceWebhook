@@ -26,7 +26,17 @@ public class WebhooksRepository : IWebhooksRepository
     {
         return await _dbContext
             .Webhooks
+            .AsNoTracking()
             .FirstOrDefaultAsync(w => w.Id == id);
+    }
+
+    public async Task<IEnumerable<Webhook>> GetByEventIdAsync(int eventId)
+    {
+        return await _dbContext
+            .Webhooks
+            .Where(w => w.EventId == eventId)
+            .ToListAsync();
+
     }
 
     public async Task AddAsync(Webhook webhook)
