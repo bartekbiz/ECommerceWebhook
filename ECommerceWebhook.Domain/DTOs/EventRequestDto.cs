@@ -1,13 +1,13 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace ECommerceWebhook.Api.DTOs;
+namespace ECommerceWebhook.Domain.DTOs;
 
-public class EventRequestDTO
+public class EventRequestDto
 {
     [Required]
     [MaxLength(100)]
     public string EventName { get; set; }
-    [Required]
+    [Required] 
     [Length(20, 20)]
     public string OrderNumber { get; set; }
 }
