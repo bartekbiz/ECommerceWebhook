@@ -22,90 +22,97 @@ public class AppDbContext : DbContext
         CreateWebhookRegistrations(modelBuilder);
     }
 
-    private void CreateEvents(ModelBuilder modelBuilder)
+    private static void CreateEvents(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Event>(ef =>
-        {
-            ef.Property(e => e.Id).ValueGeneratedOnAdd();
-        });
-
         modelBuilder.Entity<Event>()
-            .HasData(
-                new Event
-                {
-                    Id = 1,
-                    Name = "event1"
-                },
-                new Event
-                {
-                    Id = 2,
-                    Name = "event2"
-                },
-                new Event
-                {
-                    Id = 3,
-                    Name = "event3"
-                }
-                );
+            .HasIndex(e => e.Name)
+            .IsUnique();
+        
+        modelBuilder.Entity<Event>()
+            .HasData(GenerateDummyEvents());
     }
 
-    private void CreateWebhookRegistrations(ModelBuilder modelBuilder)
+    private static Event[] GenerateDummyEvents()
     {
-        modelBuilder.Entity<Webhook>(ef =>
-        {
-            ef.Property(w => w.Id).ValueGeneratedOnAdd();
-        });
+        
+        return 
+        [
+            new Event
+            {
+                Id = 1,
+                Name = "event1"
+            },
+            new Event
+            {
+                Id = 2,
+                Name = "event2"
+            },
+            new Event
+            {
+                Id = 3,
+                Name = "event3"
+            }
+        ];
+    }
 
+    private static void CreateWebhookRegistrations(ModelBuilder modelBuilder)
+    {
         modelBuilder.Entity<Webhook>()
             .HasOne(w => w.Event)
-            .WithMany(e => e.WebhookRegistrations)
+            .WithMany(e => e.Webhooks)
             .HasForeignKey(w => w.EventId)
             .OnDelete(DeleteBehavior.Cascade);
 
         modelBuilder.Entity<Webhook>()
-            .HasData(
-                new Webhook
-                {
-                    Id = 1,
-                    EventId = 1,
-                    Url = "http://some.url/1",
-                },
-                new Webhook
-                {
-                    Id = 2,
-                    EventId = 1,
-                    Url = "http://some.url/2"
-                },
-                new Webhook
-                {
-                    Id = 3,
-                    EventId = 2,
-                    Url = "http://some.url/3"
-                },
-                new Webhook
-                {
-                    Id = 4,
-                    EventId = 2,
-                    Url = "http://some.url/4"
-                },
-                new Webhook
-                {
-                    Id = 5,
-                    EventId = 2,
-                    Url = "http://some.url/5"
-                },
-                new Webhook
-                {
-                    Id = 6,
-                    EventId = 2,
-                    Url = "http://some.url/6"
-                },
-                new Webhook
-                {
-                    Id = 7,
-                    EventId = 3,
-                    Url = "http://some.url/7"
-                }
-                );
+            .HasData(GenerateDummyWebhooks());
+    }
+
+    private static Webhook[] GenerateDummyWebhooks()
+    {
+        return 
+        [
+            new Webhook
+            {
+                Id = 1,
+                EventId = 1,
+                Url = "http://some.url/1",
+            },
+            new Webhook
+            {
+                Id = 2,
+                EventId = 1,
+                Url = "http://some.url/2"
+            },
+            new Webhook
+            {
+                Id = 3,
+                EventId = 2,
+                Url = "http://some.url/3"
+            },
+            new Webhook
+            {
+                Id = 4,
+                EventId = 2,
+                Url = "http://some.url/4"
+            },
+            new Webhook
+            {
+                Id = 5,
+                EventId = 2,
+                Url = "http://some.url/5"
+            },
+            new Webhook
+            {
+                Id = 6,
+                EventId = 2,
+                Url = "http://some.url/6"
+            },
+            new Webhook
+            {
+                Id = 7,
+                EventId = 3,
+                Url = "http://some.url/7"
+            }
+        ];
     }
 }
