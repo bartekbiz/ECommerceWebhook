@@ -19,9 +19,15 @@ public class WebhooksService : IWebhooksService
     public async Task<IEnumerable<WebhookResponseDto>> GetAllAsync()
     {
         var webhooks = await _webhooksRepository.GetAllAsync();
+        
+        return _mapper.Map<IEnumerable<WebhookResponseDto>>(webhooks);
+    }
 
-        var result = _mapper.Map<IEnumerable<WebhookResponseDto>>(webhooks);
-        return result;
+    public async Task<IEnumerable<WebhookResponseDto>> GetByEventIdAsync(int eventId)
+    {
+        var webhooks = await _webhooksRepository.GetByEventIdAsync(eventId);
+
+        return _mapper.Map<IEnumerable<WebhookResponseDto>>(webhooks);
     }
 
     public async Task AddAsync(WebhookRequestDto webhookRequestDto)
