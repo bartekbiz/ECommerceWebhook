@@ -1,6 +1,7 @@
 using ECommerceWebhook.Application.Services;
 using ECommerceWebhook.Domain.Ports;
 using ECommerceWebhook.Infrastructure.DbContexts;
+using ECommerceWebhook.Infrastructure.Notifiers;
 using ECommerceWebhook.Infrastructure.Repositories;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
@@ -16,6 +17,7 @@ builder.Services.AddScoped<IEventsRepository, EventsRepository>();
 
 builder.Services.AddScoped<IWebhooksService, WebhooksService>();
 builder.Services.AddScoped<IWebhooksRepository, WebhooksRepository>();
+builder.Services.AddScoped<IWebhookNotifier, WebhookNotifier>();
 
 #region Configure SQLite
 
