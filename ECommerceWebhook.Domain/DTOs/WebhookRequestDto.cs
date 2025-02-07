@@ -5,7 +5,7 @@ namespace ECommerceWebhook.Domain.DTOs;
 public class WebhookRequestDto
 {
     [Required]
-    public string EventId { get; set; }
+    public int EventId { get; set; }
     [Required]
     [MaxLength(2048)]
     public string Url { get; set; }
