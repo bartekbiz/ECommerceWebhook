@@ -1,3 +1,4 @@
+using ECommerceWebhook.Domain.DTOs;
 using ECommerceWebhook.Domain.Entities;
 using ECommerceWebhook.Domain.Ports;
 using ECommerceWebhook.Infrastructure.DbContexts;
@@ -13,14 +14,6 @@ public class EventsRepository : IEventsRepository
     {
         _dbContext = dbContext;
     }
-    
-    public async Task<bool> ExistsAsync(string eventName)
-    {
-        return await _dbContext
-            .Events
-            .AsNoTracking()
-            .AnyAsync(e => e.Name.Trim().ToLower() == eventName.Trim().ToLower());
-    }
 
     public async Task<IEnumerable<Event>> GetAllAsync()
     {
@@ -28,5 +21,12 @@ public class EventsRepository : IEventsRepository
             .Events
             .AsNoTracking()
             .ToListAsync();
+    }
+
+    public async Task<Event?> GetByNameAsync(string eventName)
+    {
+        return await _dbContext.Events
+            .AsNoTracking()
+            .FirstOrDefaultAsync(e => e.Name.Trim().ToLower() == eventName.Trim().ToLower());
     }
 }
