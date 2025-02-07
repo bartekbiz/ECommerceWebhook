@@ -7,10 +7,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="Notifiers\" />
-    </ItemGroup>
-
-    <ItemGroup>
       <ProjectReference Include="..\ECommerceWebhook.Domain\ECommerceWebhook.Domain.csproj" />
     </ItemGroup>
 
