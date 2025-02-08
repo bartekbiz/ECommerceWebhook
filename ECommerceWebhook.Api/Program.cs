@@ -1,3 +1,4 @@
+using ECommerceWebhook.Api.Middleware;
 using ECommerceWebhook.Application.Services;
 using ECommerceWebhook.Domain.Ports;
 using ECommerceWebhook.Infrastructure.DbContexts;
@@ -5,6 +6,9 @@ using ECommerceWebhook.Infrastructure.Notifiers;
 using ECommerceWebhook.Infrastructure.Repositories;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
+using NLog;
+using NLog.Web;
+using ILogger = NLog.ILogger;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,7 +21,11 @@ builder.Services.AddScoped<IEventsRepository, EventsRepository>();
 
 builder.Services.AddScoped<IWebhooksService, WebhooksService>();
 builder.Services.AddScoped<IWebhooksRepository, WebhooksRepository>();
-builder.Services.AddScoped<IWebhookNotifier, WebhookNotifier>();
+builder.Services.AddScoped<IWebhookNotifier, HttpWebhookNotifier>();
+
+builder.Services.AddScoped<ErrorHandlingMiddleware>();
+
+builder.Services.AddSingleton<HttpClient>();
 
 #region Configure SQLite
 
@@ -38,6 +46,10 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.Configure<RouteOptions>(options => options.LowercaseUrls = true);
 
+builder.Logging.ClearProviders();
+builder.Host.UseNLog();
+builder.Services.AddSingleton<ILogger>(provider => LogManager.GetCurrentClassLogger());
+
 #endregion
 
 var app = builder.Build();
@@ -55,11 +67,10 @@ using (var scope = app.Services.CreateScope())
 
 #region Configure the HTTP request pipeline.
 
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+app.UseSwagger();
+app.UseSwaggerUI();
+
+app.UseMiddleware<ErrorHandlingMiddleware>();
 
 app.UseHttpsRedirection();
 
