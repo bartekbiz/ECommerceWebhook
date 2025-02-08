@@ -4,12 +4,12 @@ using NLog;
 
 namespace ECommerceWebhook.Infrastructure.Notifiers;
 
-public class HttpWebhookNotifier : IWebhookNotifier
+public class HttpWebhooksNotifier : IWebhooksNotifier
 {
     private readonly HttpClient _httpClient;
     private readonly ILogger _logger;
     
-    public HttpWebhookNotifier(HttpClient httpClient, ILogger logger)
+    public HttpWebhooksNotifier(HttpClient httpClient, ILogger logger)
     {
         _httpClient = httpClient;
         _logger = logger;

@@ -21,7 +21,7 @@ builder.Services.AddScoped<IEventsRepository, EventsRepository>();
 
 builder.Services.AddScoped<IWebhooksService, WebhooksService>();
 builder.Services.AddScoped<IWebhooksRepository, WebhooksRepository>();
-builder.Services.AddScoped<IWebhookNotifier, HttpWebhookNotifier>();
+builder.Services.AddScoped<IWebhooksNotifier, HttpWebhooksNotifier>();
 
 builder.Services.AddScoped<ErrorHandlingMiddleware>();
 
