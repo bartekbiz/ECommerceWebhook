@@ -75,43 +75,43 @@ public class AppDbContext : DbContext
             {
                 Id = 1,
                 EventId = 1,
-                Url = "http://some.url/1",
+                Url = "http://some.com/1",
             },
             new Webhook
             {
                 Id = 2,
                 EventId = 1,
-                Url = "http://some.url/2"
+                Url = "http://some.com/2"
             },
             new Webhook
             {
                 Id = 3,
                 EventId = 2,
-                Url = "http://some.url/3"
+                Url = "http://some.com/3"
             },
             new Webhook
             {
                 Id = 4,
                 EventId = 2,
-                Url = "http://some.url/4"
+                Url = "http://some.com/4"
             },
             new Webhook
             {
                 Id = 5,
                 EventId = 2,
-                Url = "http://some.url/5"
+                Url = "http://some.com/5"
             },
             new Webhook
             {
                 Id = 6,
                 EventId = 2,
-                Url = "http://some.url/6"
+                Url = "http://some.com/6"
             },
             new Webhook
             {
                 Id = 7,
                 EventId = 3,
-                Url = "http://some.url/7"
+                Url = "http://some.com/7"
             }
         ];
     }
