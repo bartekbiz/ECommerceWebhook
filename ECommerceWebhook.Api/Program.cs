@@ -29,7 +29,7 @@ builder.Services.AddSingleton<HttpClient>();
 
 #region Configure SQLite
 
-var dbConn = new SqliteConnection("Filename=:memory:");
+var dbConn = new SqliteConnection(builder.Configuration.GetConnectionString("InMemory"));
 await dbConn.OpenAsync();
 
 builder.Services.AddDbContext<AppDbContext>(options =>
