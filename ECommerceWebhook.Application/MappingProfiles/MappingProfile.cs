@@ -2,7 +2,7 @@ using AutoMapper;
 using ECommerceWebhook.Domain.DTOs;
 using ECommerceWebhook.Domain.Entities;
 
-namespace ECommerceWebhook.Api.MappingProfiles;
+namespace ECommerceWebhook.Application.MappingProfiles;
 
 public class MappingProfile : Profile
 {
