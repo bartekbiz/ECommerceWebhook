@@ -7,17 +7,17 @@ namespace ECommerceWebhook.Application.Services;
 public class EventsService : IEventsService
 {
     private readonly IEventsRepository _eventsRepository;
+    private readonly IWebhooksRepository _webhooksRepository;
+    private readonly IWebhooksNotifier _webhooksNotifier;
     private readonly IMapper _mapper;
-    private readonly IWebhooksService _webhooksService;
-    private readonly IWebhookNotifier _webhookNotifier;
 
-    public EventsService(IEventsRepository eventsRepository, IMapper mapper, 
-        IWebhooksService webhooksService, IWebhookNotifier webhookNotifier)
+    public EventsService(IEventsRepository eventsRepository, IWebhooksRepository webhooksRepository,
+        IWebhooksNotifier webhooksNotifier, IMapper mapper)
     {
         _eventsRepository = eventsRepository;
+        _webhooksRepository = webhooksRepository;
+        _webhooksNotifier = webhooksNotifier;
         _mapper = mapper;
-        _webhooksService = webhooksService;
-        _webhookNotifier = webhookNotifier;
     }
     
     public async Task HandleAsync(string eventName, string orderNumber)
@@ -28,9 +28,9 @@ public class EventsService : IEventsService
             throw new ArgumentException($"Event \"{eventName}\" does not exist.", nameof(eventName));
         }
 
-        var webhooksToNotify = await _webhooksService.GetByEventIdAsync(eventEntity.Id);
+        var webhooksToNotify = await _webhooksRepository.GetByEventIdAsync(eventEntity.Id);
         var urlsToNotify = webhooksToNotify.Select(s => s.Url);
-        await _webhookNotifier.NotifyAsync(eventName, orderNumber, urlsToNotify);
+        await _webhooksNotifier.NotifyAsync(eventName, orderNumber, urlsToNotify);
     }
 
     public async Task<IEnumerable<EventResponseDto>> GetAllAsync()
