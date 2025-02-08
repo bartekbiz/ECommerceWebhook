@@ -23,17 +23,10 @@ public class WebhooksService : IWebhooksService
         return _mapper.Map<IEnumerable<WebhookResponseDto>>(webhooks);
     }
 
-    public async Task<IEnumerable<WebhookResponseDto>> GetByEventIdAsync(int eventId)
-    {
-        var webhooks = await _webhooksRepository.GetByEventIdAsync(eventId);
-
-        return _mapper.Map<IEnumerable<WebhookResponseDto>>(webhooks);
-    }
-
     public async Task AddAsync(WebhookRequestDto webhookRequestDto)
     {
         var webhookToAdd = _mapper.Map<Webhook>(webhookRequestDto);
-
+        
         await _webhooksRepository.AddAsync(webhookToAdd);
     }
 
