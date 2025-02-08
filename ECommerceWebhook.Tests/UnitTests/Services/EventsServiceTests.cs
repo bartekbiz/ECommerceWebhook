@@ -77,9 +77,16 @@ public class EventsServiceTests : ServiceTestsBase
     [Fact]
     public async Task HandleAsync_ShouldFail()
     {
+        // Arrange
+        const string eventName = "event1";
+        
+        _mockEventsRepository
+            .Setup(x => x.GetByNameAsync(eventName))
+            .ReturnsAsync((Event?)null);
+        
         // Act & Assert
         await Assert.ThrowsAsync<ArgumentException>(() => 
-            _eventsService.HandleAsync("name", "number"));
+            _eventsService.HandleAsync(eventName, "number"));
     }
     
     [Fact]
