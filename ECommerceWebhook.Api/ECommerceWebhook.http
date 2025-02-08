@@ -1,6 +1,0 @@
-@ECommerceWebhook_HostAddress = http://localhost:5027
-
-POST {{ECommerceWebhook_HostAddress}}/events
-Accept: application/json
-
-###
